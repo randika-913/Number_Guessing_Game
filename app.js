@@ -1,4 +1,5 @@
 let randomNum = Math.floor(Math.random() * 10) + 1;
+let attemptsLeft = 3;
 
 function checkGuess() {
 
@@ -18,11 +19,23 @@ function checkGuess() {
 
     } else {
 
+        attemptsLeft--;
+
+        if (attemptsLeft === 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Game Over! ❌',
+                text: `You ran out of attempts! The correct number was ${randomNum}.`
+            });
+
+            resetRandomNum(); 
+        }else{
+
         if (randomNum > userGuess) {
 
             Swal.fire({
                 title: "අයියෝ ඔයිට වඩා වැඩියි !!",
-                text: "You guessed the number incorrectly !!",
+                text: `Attempts Left: ${attemptsLeft}`,
                 imageUrl: "https://media.tenor.com/rVITf4xkgrkAAAAM/steve-carell-no.gif",
                 imageWidth: 400,
                 imageHeight: 200,
@@ -31,15 +44,16 @@ function checkGuess() {
         }else if(randomNum < userGuess) {
             Swal.fire({
                 title: "අයියෝ ඔයිට වඩා අඩුයි !!",
-                text: "You guessed the number incorrectly !!",
+                text: `Attempts Left: ${attemptsLeft}`,
                 imageUrl: "https://media.tenor.com/rVITf4xkgrkAAAAM/steve-carell-no.gif",
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: "Custom image"
             });
         }
+        }
 
-
+        txtUserInput.value = "";
     }
 
 }
@@ -47,4 +61,5 @@ function checkGuess() {
 function resetRandomNum() {
     txtUserInput.value = "";
     randomNum = Math.floor(Math.random() * 10) + 1;
+    attemptsLeft = 3;
 }
